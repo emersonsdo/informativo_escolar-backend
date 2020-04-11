@@ -1,11 +1,10 @@
 const express = require('express');
+const UserController = require('./controllers/UserController');
 
 const routes = express.Router();
 
 //req.body = acessar corpo da requisição
-routes.post('/users', function (req, res) {
-    return res.json(req.body);
-});
+routes.post('/users', UserController.store);
 
 //req.query = acessar query_params
 routes.get('/users', function (req, res) {
