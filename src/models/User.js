@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-    nome: String,
+    name: String,
     cpf: String,
     email: String,
     pin: {type: Number, min: 0, max: 9999},
-    dependentes: [{
-        nome: String,
-        matricula: String,
-        data_nascimento: {type: Date, default: Date.now},
-        serie: {type: Number, min: 0, max: 6}
+    dependents: [{
+        name: String,
+        register_number: String,
+        birth_date: {type: Date, default: Date.now},
+        grade: {type: Number, min: 0, max: 6}
     }],
-    ativo: {type: Boolean, default: true},
-    criado_em: {type: Date, default: Date.now}
+    active: {type: Boolean, default: true},
+    created_at: {type: Date, default: Date.now}
 });
 
 // module.exports = mongoose.model('User', UserSchema);
