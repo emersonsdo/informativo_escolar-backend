@@ -13,15 +13,19 @@ module.exports = {
         const active = true;
         const created_at = moment.now();
 
-        const user = await User({
-            name,
-            cpf,
-            email,
-            pin,
-            dependents,
-            active,
-            created_at
-        });
+        let user = await User.findOne({ cpf });
+        
+        if(!user) {
+            user = await User.create({
+                name,
+                cpf,
+                email,
+                pin,
+                dependents,
+                active,
+                created_at
+            });
+        }
 
         /*console.log(`Nome: ${name} \n CPF: ${cpf} \n E-mail: ${email} \n Pin: ${pin} \n`);
         console.log('Dados do(s) dependente(s): \n');
@@ -37,11 +41,8 @@ module.exports = {
             Mês de nascimento: ${month}
             Ano de nascimento: ${year}
             Série: ${dependents[key].grade}`);
-
-            
         });*/
-
+        
         return res.json(user);
     }
-
 }
