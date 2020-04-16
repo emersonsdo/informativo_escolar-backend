@@ -1,10 +1,13 @@
 const express = require('express');
 const UserController = require('./controllers/UserController');
+const MessageController = require('./controllers/MessageController');
 
 const routes = express.Router();
 
 routes.post('/users', UserController.store);
-routes.get('/parents', UserController.index)
+routes.get('/parents', UserController.index);
+
+routes.post('/messages', MessageController.store);
 
 
 //req.body = acessar corpo da requisição

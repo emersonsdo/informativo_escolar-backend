@@ -24,4 +24,4 @@ const MessageSchema = new mongoose.Schema({
     image_link: String
 });
 
-module.exports = mongoose.model('Message', UserSchema);
+module.exports = mongoose.model('Message', MessageSchema);
