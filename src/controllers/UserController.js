@@ -5,11 +5,7 @@ const User = require('../models/User');
 module.exports = {
 
     async store(req, res) {
-        const { name } = req.body;
-        const { cpf }  = req.body;
-        const { email } = req.body;
-        const { pin } = req.body;
-        const { dependents } = req.body;
+        const { name, cpf, email, pin, dependents } = req.body;
         const active = true;
         const created_at = moment.now();
 
@@ -44,5 +40,24 @@ module.exports = {
         });*/
         
         return res.json(user);
+    },
+
+    async index(req, res){
+        const { grade } = req.query;
+
+        const parents = await User.find({ 'dependents.grade': grade});
+
+        console.log(`parents: ${parents}` );
+        return res.json({ status: true });
     }
+
 }
+
+
+
+
+
+
+
+
+
