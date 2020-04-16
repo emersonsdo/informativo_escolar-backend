@@ -1,6 +1,7 @@
 //store, index (quais tipos de filtros serão oferecidos?), show, update, destroy
 const moment = require('moment');
 const User = require('../models/User');
+const validarCpf = require('validar-cpf');
 
 module.exports = {
 
@@ -8,6 +9,10 @@ module.exports = {
         const { name, cpf, email, pin, dependents } = req.body;
         const active = true;
         const created_at = moment.now();
+
+        if(!validarCpf(cpf)){
+            return res.status(422).json({ error: `CPF ${cpf} inválido!` });
+        }
 
         let user = await User.findOne({ cpf });
         
@@ -45,12 +50,10 @@ module.exports = {
     async index(req, res){
         const { grade } = req.query;
 
-        const parents = await User.find({ 'dependents.grade': grade});
+        const parents = await User.find({ 'dependents.grade': grade });
 
-        console.log(`parents: ${parents}` );
-        return res.json({ status: true });
+        return res.json(parents);
     }
-
 }
 
 

@@ -1,15 +1,39 @@
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 const UserSchema = new mongoose.Schema({
-    name: String,
-    cpf: String,
+    name: {
+        type: String,
+        required: 'Nome do usuário deve ser preenchido'
+    },
+    cpf: {
+        type: String,
+        required: 'CPF do usuário deve ser preenchido',
+        unique: true
+    },
     email: String,
     pin: {type: Number, min: 0, max: 9999},
     dependents: [{
-        name: String,
-        register_number: String,
-        birth_date: {type: Date, default: Date.now},
-        grade: {type: Number, min: 0, max: 6}
+        name: {
+            type: String,
+            required: 'Nome do(a) dependente deve ser preenchido'
+        },
+        register_number: {
+            type: String,
+            required: 'Número da matrícula do(a) dependente deve ser preenchido',
+            unique: true
+        },
+        birth_date: {
+            type: Date, 
+            default: Date.now,
+            required: 'Data de nascimento do(a) dependente deve ser preenchida'
+        },
+        grade: {
+            type: Number, 
+            min: 0, 
+            max: 6,
+            required: 'A série atual do(a) dependente deve ser preenchido'
+        }
     }],
     active: {type: Boolean, default: true},
     created_at: {type: Date, default: Date.now}
