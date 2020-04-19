@@ -20,7 +20,10 @@ const MessageSchema = new mongoose.Schema({
         default: Date.now
     },
     summary: String,
-    alreadRead: Boolean,
+    alread_read: {
+        type: Boolean,
+        default: false
+    },
     image_link: String
 });
 

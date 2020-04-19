@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
-mongoose.set('useCreateIndex', true);
+//mongoose.set('parentCreateIndex', true);
 
-const UserSchema = new mongoose.Schema({
+const ParentSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: 'Nome do usuário deve ser preenchido'
+        required: 'Nome do responsável deve ser preenchido'
     },
     cpf: {
         type: String,
-        required: 'CPF do usuário deve ser preenchido',
+        required: 'CPF do responsável deve ser preenchido',
         unique: true
     },
     email: String,
@@ -39,4 +39,4 @@ const UserSchema = new mongoose.Schema({
     created_at: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Parent', ParentSchema);

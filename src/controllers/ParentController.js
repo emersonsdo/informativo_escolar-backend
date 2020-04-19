@@ -1,6 +1,6 @@
 //store, index (quais tipos de filtros serão oferecidos?), show, update, destroy
 const moment = require('moment');
-const User = require('../models/User');
+const Parent = require('../models/Parent');
 const validarCpf = require('validar-cpf');
 
 module.exports = {
@@ -14,10 +14,10 @@ module.exports = {
             return res.status(422).json({ error: `CPF ${cpf} inválido!` });
         }
 
-        let user = await User.findOne({ cpf });
+        let user = await Parent.findOne({ cpf });
         
         if(!user) {
-            user = await User.create({
+            user = await Parent.create({
                 name,
                 cpf,
                 email,
@@ -50,12 +50,34 @@ module.exports = {
     async index(req, res){
         const { grade } = req.query;
 
-        const parents = await User.find({ 'dependents.grade': grade });
+        const parents = getParents(grade);//await User.find({ 'dependents.grade': grade });
 
         return res.json(parents);
+    },
+
+    getParentsForGrade(grade) {
+        return getParents(grade);
     }
 }
 
+async function getParents(grade) {
+
+    let parents;
+    if(!grade) {
+        parents = await Parent.find({}, (err, users) => {
+            var userMap = {};
+
+            users.forEach(function(user){
+                userMap[user._id] = user;
+            });
+
+        });
+    } else {
+        parents = await Parent.find({ 'dependents.grade': grade });
+    }
+
+    return parents;
+}
 
 
 
