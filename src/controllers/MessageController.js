@@ -1,7 +1,7 @@
 const Message = require('../models/Message');
 const moment = require('moment');
 const Parent = require('../models/Parent');
-const UserController = require('./ParentController');
+const ParentController = require('./ParentController');
 
 
 module.exports = {
@@ -31,7 +31,7 @@ module.exports = {
 
 async function sendByGrade(forGrade){
     //TODO: Eviar a mensagem aos destinatários corretos
-    const users = await UserController.getParentsForGrade(forGrade);
+    const users = await ParentController.getParentsForGrade(forGrade);
 
     console.log(users);
     return;

@@ -24,7 +24,11 @@ const MessageSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    image_link: String
+    image_link: String,
+    created_at: {
+        type: Date, 
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model('Message', MessageSchema);

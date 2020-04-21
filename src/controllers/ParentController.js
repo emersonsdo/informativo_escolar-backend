@@ -28,22 +28,6 @@ module.exports = {
                 created_at
             });
         }
-
-        /*console.log(`Nome: ${name} \n CPF: ${cpf} \n E-mail: ${email} \n Pin: ${pin} \n`);
-        console.log('Dados do(s) dependente(s): \n');
-        Object.keys(dependents).forEach(function(key) {
-            var birth_date = moment(dependents[key].birth_date, 'DD/MM/YYYY');
-            var day = birth_date.format('DD');
-            var month = birth_date.format('MM');
-            var year = birth_date.format('YYYY');
-            console.log(`Nome: ${dependents[key].name}
-            Matrícula: ${dependents[key].register_number} 
-            Data de nascimento: ${dependents[key].birth_date}
-            Dia de nascimento: ${day}
-            Mês de nascimento: ${month}
-            Ano de nascimento: ${year}
-            Série: ${dependents[key].grade}`);
-        });*/
         
         return res.json(parent);
     },

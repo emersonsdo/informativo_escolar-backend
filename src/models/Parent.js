@@ -37,7 +37,8 @@ const ParentSchema = new mongoose.Schema({
         }
     }],
     active: {type: Boolean, default: true},
-    created_at: {type: Date, default: Date.now}
+    created_at: {type: Date, default: Date.now},
+    update_at: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('Parent', ParentSchema);
