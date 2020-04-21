@@ -6,7 +6,7 @@ const validarCpf = require('validar-cpf');
 module.exports = {
 
     async store(req, res) {
-        const { name, cpf, email, pin, dependents } = req.body;
+        const { name, cpf, email, phone, pin, dependents } = req.body;
         const active = true;
         const created_at = moment.now();
 
@@ -14,13 +14,14 @@ module.exports = {
             return res.status(422).json({ error: `CPF ${cpf} inválido!` });
         }
 
-        let user = await Parent.findOne({ cpf });
+        let parent = await Parent.findOne({ cpf });
         
-        if(!user) {
-            user = await Parent.create({
+        if(!parent) {
+            parent = await Parent.create({
                 name,
                 cpf,
                 email,
+                phone,
                 pin,
                 dependents,
                 active,
@@ -44,13 +45,14 @@ module.exports = {
             Série: ${dependents[key].grade}`);
         });*/
         
-        return res.json(user);
+        return res.json(parent);
     },
 
     async index(req, res){
         const { grade } = req.query;
 
-        const parents = getParents(grade);//await User.find({ 'dependents.grade': grade });
+        const parents = await getParents(grade);
+        console.log(`service: ${parents}`);
 
         return res.json(parents);
     },
@@ -64,11 +66,11 @@ async function getParents(grade) {
 
     let parents;
     if(!grade) {
-        parents = await Parent.find({}, (err, users) => {
-            var userMap = {};
+        parents = await Parent.find({}, (err, parents) => {
+            var parentMap = {};
 
-            users.forEach(function(user){
-                userMap[user._id] = user;
+            parents.forEach(function(parent){
+                parentMap[parent._id] = parent;
             });
 
         });

@@ -12,6 +12,7 @@ const ParentSchema = new mongoose.Schema({
         unique: true
     },
     email: String,
+    phone: String,
     pin: {type: Number, min: 0, max: 9999},
     dependents: [{
         name: {

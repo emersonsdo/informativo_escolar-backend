@@ -4,7 +4,7 @@ const MessageController = require('./controllers/MessageController');
 
 const routes = express.Router();
 
-routes.post('/users', ParentController.store);
+routes.post('/parents', ParentController.store);
 routes.get('/parents', ParentController.index);
 
 routes.post('/messages', MessageController.store);

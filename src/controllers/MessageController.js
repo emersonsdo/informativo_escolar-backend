@@ -22,17 +22,16 @@ module.exports = {
             alread_read
         });*/
 
-        send(grade);
+        sendByGrade(grade);
         
         return res.status(204).json();
     },
-
    
 }
 
-function send(forGrade){
+async function sendByGrade(forGrade){
     //TODO: Eviar a mensagem aos destinatários corretos
-    const users = UserController.getParentsForGrade(forGrade);
+    const users = await UserController.getParentsForGrade(forGrade);
 
     console.log(users);
     return;
