@@ -24,12 +24,12 @@ const UserSchema = new mongoose.Schema({
     //0: tudo, 1: criar usuários, 2: enviar avisos, 3: cadastrar responsáveis, 4: 2 e 3
     permission_level: Number,
 
-    create_at: {
+    created_at: {
         type: Date, 
         default: Date.now
     },
 
-    update_at: {
+    updated_at: {
         type: Date, 
         default: Date.now
     }

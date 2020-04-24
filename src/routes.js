@@ -1,11 +1,16 @@
 const express = require('express');
 const UserController = require('./controllers/UserController');
+const AuthController = require('./controllers/AuthController');
 const ParentController = require('./controllers/ParentController');
 const MessageController = require('./controllers/MessageController');
 
 const routes = express.Router();
 
 routes.post('/users', UserController.store);
+routes.get('/users/:id', UserController.getById);
+routes.put('/users/:id', UserController.update);
+
+routes.post('/auth', AuthController.auth);
 
 routes.post('/parents', ParentController.store);
 routes.get('/parents', ParentController.index);
