@@ -15,7 +15,6 @@ module.exports = {
         const encriptedPassword = salt + '$' + hash;
         
        let user = await User.find({ email });
-        console.log(`Usuário: ${user}`);
 
         if(user){
             return res.status(422).json({ error: `Usuário com e-mail ${email} já cadastrado!` });
