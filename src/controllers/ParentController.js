@@ -64,11 +64,3 @@ async function getParents(grade) {
 
     return parents;
 }
-
-
-
-
-
-
-
-

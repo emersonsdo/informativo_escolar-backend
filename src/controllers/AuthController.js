@@ -2,7 +2,7 @@ const User = require('../models/User');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../Config');
-const BodyParser = require('body-parser'); 
+
 
 module.exports = {
     async auth(req, res) {
@@ -21,6 +21,13 @@ module.exports = {
         if(hash !== passwordFields[1]){
             return res.status(401).send({Erro: "Usuário ou senha inválidos"});
         }
+
+        req.body = {
+            user_id: user[0]._id,
+            email: user[0].email,
+            permission_level: user[0].permission_level,
+            name: user[0].first_name + ' ' + user[0].last_name,
+        };
 
         try {
             console.log(`jwtSecret: ${jwtConfig}`);

@@ -8,6 +8,8 @@ module.exports = {
 
     async store(req, res){
 
+        console.log(`Criando a mensagem`);
+
         const { title, summary, content, grade, image_link } = req.body;
         const send_date = moment.now();
         const alread_read = false;

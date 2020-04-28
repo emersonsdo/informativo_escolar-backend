@@ -1,6 +1,7 @@
 const express = require('express');
 const UserController = require('./controllers/UserController');
 const AuthController = require('./controllers/AuthController');
+const Authenticator = require('./security/Authenticator');
 const ParentController = require('./controllers/ParentController');
 const MessageController = require('./controllers/MessageController');
 
@@ -15,7 +16,10 @@ routes.post('/auth', AuthController.auth);
 routes.post('/parents', ParentController.store);
 routes.get('/parents', ParentController.index);
 
-routes.post('/messages', MessageController.store);
+routes.post('/messages', [
+    Authenticator.authenticate, 
+    Authenticator.hasAuthorization(2),
+    MessageController.store]);
 
 
 //req.body = acessar corpo da requisição
