@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
 
     phone: String,
 
-    //0: tudo, 1: criar usuários, 2: enviar avisos, 3: cadastrar responsáveis, 4: 2 e 3
+    //0: tudo, 1: criar usuários, 2: enviar avisos e cadastrar responsáveis
     permission_level: Number,
 
     created_at: {

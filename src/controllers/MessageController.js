@@ -14,7 +14,7 @@ module.exports = {
         const send_date = moment.now();
         const alread_read = false;
 
-        /*const message = await Message.create({
+        const message = await Message.create({
             title,
             summary,
             content,
@@ -22,8 +22,9 @@ module.exports = {
             image_link,
             grade,
             alread_read
-        });*/
+        });
 
+        //TODO: terminar. como enviar notificação?
         sendByGrade(grade);
         
         return res.status(204).json();

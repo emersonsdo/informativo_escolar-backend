@@ -1,14 +1,12 @@
 const User = require('../models/User');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const jwtConfig = require('../Config');
+const Config = require('../Config');
 
 
 module.exports = {
     async auth(req, res) {
         const user = await User.find({ email: req.body.email });
-        console.log(`Usuário: ${user}`);
-        console.log(`Senha: ${user[0].password}`);
 
         if(!user){
             return res.status(401).json({Erro: "Usuário ou senha inválidos"});
@@ -30,15 +28,15 @@ module.exports = {
         };
 
         try {
-            console.log(`jwtSecret: ${jwtConfig}`);
+            const jwtSecret = Config.jwtSecret;
 
-            let refreshId = user[0]._id + jwtConfig;
+            let refreshId = user[0]._id + jwtSecret;
             let salt = crypto.randomBytes(16).toString('base64');
             let hash = crypto.createHmac('sha512', salt).update(refreshId).digest("base64");
             req.body.refreshKey = salt;
             req.body.password = '********'
 
-            let token = jwt.sign(req.body, jwtConfig);
+            let token = jwt.sign(req.body, jwtSecret);
 
             let b = new Buffer(hash);
             let refresh_token = b.toString('base64');
