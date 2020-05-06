@@ -6,7 +6,16 @@ const Config = require('../Config');
 
 module.exports = {
     async auth(req, res) {
-        const user = await User.find({ email: req.body.email });
+
+        //Corrigir
+        const authFieldsBase64 = req.body.headers.Authorization.split(' ')[1];
+        const base64Buffer = Buffer.from(authFieldsBase64, 'base64');
+        const authFields = base64Buffer.toString('ascii').split(':');
+
+        const email = authFields[0];
+        const password = authFields[1];
+
+        const user = await User.find({ email });
 
         if(!user){
             return res.status(401).json({Erro: "Usuário ou senha inválidos"});
@@ -14,7 +23,7 @@ module.exports = {
 
         const passwordFields = user[0].password.split('$');
         const salt = passwordFields[0];
-        const hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
+        const hash = crypto.createHmac('sha512', salt).update(password).digest("base64");
 
         if(hash !== passwordFields[1]){
             return res.status(401).send({Erro: "Usuário ou senha inválidos"});
@@ -40,7 +49,9 @@ module.exports = {
 
             let b = new Buffer(hash);
             let refresh_token = b.toString('base64');
-            return res.status(201).json({accessToken: token, refreshToken: refresh_token});
+             
+            res.status(201).json({accessToken: token, refreshToken: refresh_token});
+            return res;
         } catch (error) {
             return res.status(500).json({errors: error});
         }
