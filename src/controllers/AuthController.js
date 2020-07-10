@@ -8,7 +8,7 @@ module.exports = {
     async auth(req, res) {
 
         //Corrigir
-        const authFieldsBase64 = req.body.headers.Authorization.split(' ')[1];
+        const authFieldsBase64 = req.body.headers['Authorization'].split(' ')[1]; //Verificar se é um Bearer
         const base64Buffer = Buffer.from(authFieldsBase64, 'base64');
         const authFields = base64Buffer.toString('ascii').split(':');
 
