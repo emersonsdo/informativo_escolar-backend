@@ -7,10 +7,22 @@ const Config = require('../Config');
 module.exports = {
     async auth(req, res) {
 
-        //Corrigir
-        const authFieldsBase64 = req.body.headers['Authorization'].split(' ')[1]; //Verificar se é um Bearer
+        if(!req.headers['authorization'] || req.headers['authorization'].split(' ').length != 2){
+            return res.status(400).send({Erro: "Requisição inválida"});
+        }
+ 
+        const authType = req.headers['authorization'].split(' ')[0];
+        if(authType !== 'Basic') {
+            return res.status(400).send({Erro: "Requisição inválida"});
+        }
+
+        const authFieldsBase64 = req.headers['authorization'].split(' ')[1];
         const base64Buffer = Buffer.from(authFieldsBase64, 'base64');
         const authFields = base64Buffer.toString('ascii').split(':');
+
+        if(!authFields || authFields.length != 2){
+            return res.status(400).send({Erro: "Requisição inválida"});
+        }
 
         const email = authFields[0];
         const password = authFields[1];
