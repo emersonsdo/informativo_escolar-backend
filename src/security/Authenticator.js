@@ -16,7 +16,7 @@ exports.authenticate = (req, res, next) => {
                 return next();
             }
         } catch (err) {
-            return res.status(500).json({error: 'Ocorreu um erro durante o processo de autenticação'});
+            return res.status(500).json({message: 'Ocorreu um erro durante o processo de autenticação'});
         }
     } else {
         return res.status(401).json({message: 'Credenciais inválidas'});

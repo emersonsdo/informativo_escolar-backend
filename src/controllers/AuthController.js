@@ -8,12 +8,12 @@ module.exports = {
     async auth(req, res) {
 
         if(!req.headers['authorization'] || req.headers['authorization'].split(' ').length != 2){
-            return res.status(400).send({Erro: "Requisição inválida"});
+            return res.status(400).send({message: "Requisição inválida"});
         }
  
         const authType = req.headers['authorization'].split(' ')[0];
         if(authType !== 'Basic') {
-            return res.status(400).send({Erro: "Requisição inválida"});
+            return res.status(400).send({message: "Requisição inválida"});
         }
 
         const authFieldsBase64 = req.headers['authorization'].split(' ')[1];
@@ -21,7 +21,7 @@ module.exports = {
         const authFields = base64Buffer.toString('ascii').split(':');
 
         if(!authFields || authFields.length != 2){
-            return res.status(400).send({Erro: "Requisição inválida"});
+            return res.status(400).send({message: "Requisição inválida"});
         }
 
         const email = authFields[0];
@@ -30,7 +30,7 @@ module.exports = {
         const user = await User.find({ email });
 
         if(!user){
-            return res.status(401).json({Erro: "Usuário ou senha inválidos"});
+            return res.status(401).json({message: "Usuário ou senha inválidos"});
         }
 
         const passwordFields = user[0].password.split('$');
@@ -38,7 +38,7 @@ module.exports = {
         const hash = crypto.createHmac('sha512', salt).update(password).digest("base64");
 
         if(hash !== passwordFields[1]){
-            return res.status(401).send({Erro: "Usuário ou senha inválidos"});
+            return res.status(401).send({message: "Usuário ou senha inválidos"});
         }
 
         req.body = {
@@ -65,7 +65,7 @@ module.exports = {
             res.status(201).json({accessToken: token, refreshToken: refresh_token});
             return res;
         } catch (error) {
-            return res.status(500).json({errors: error});
+            return res.status(500).json({message: error});
         }
     }
 }
