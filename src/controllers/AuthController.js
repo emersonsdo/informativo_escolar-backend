@@ -29,7 +29,7 @@ module.exports = {
 
         const user = await User.find({ email });
 
-        if(!user){
+        if(user.length === 0){
             return res.status(401).json({message: "Usuário ou senha inválidos"});
         }
 
