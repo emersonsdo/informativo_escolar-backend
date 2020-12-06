@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const Config = require('../Config');
+const { jwtSecret } = require('../config');
 
 
 module.exports = {
@@ -49,8 +49,6 @@ module.exports = {
         };
 
         try {
-            const jwtSecret = Config.jwtSecret;
-
             let refreshId = user[0]._id + jwtSecret;
             let salt = crypto.randomBytes(16).toString('base64');
             let hash = crypto.createHmac('sha512', salt).update(refreshId).digest("base64");
